@@ -1,0 +1,4 @@
+# Ignore GATE output and ROOT files
+*.root
+run_*/
+output/

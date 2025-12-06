@@ -1,0 +1,27 @@
+/control/execute config.mac
+
+/gate/physics/addPhysicsList emstandard_opt3
+
+# High cut by default
+/gate/physics/Gamma/SetCutInRegion      world 1 km
+/gate/physics/Electron/SetCutInRegion   world 1 km
+/gate/physics/Positron/SetCutInRegion   world 1 km
+
+# Cuts for phantom
+/gate/physics/Gamma/SetCutInRegion      phantom 1 mm
+/gate/physics/Electron/SetCutInRegion   phantom 1 mm
+/gate/physics/Positron/SetCutInRegion   phantom 1 mm
+
+# Cuts for LYSO
+/gate/physics/Gamma/SetCutInRegion      LYSO 1 mm
+/gate/physics/Electron/SetCutInRegion   LYSO 1 mm
+/gate/physics/Positron/SetCutInRegion   LYSO 1 mm
+
+# Cuts for particle in BGO
+#/gate/physics/Gamma/SetCutInRegion      BGO 1.0 mm
+#/gate/physics/Electron/SetCutInRegion   BGO 1.0 mm
+#/gate/physics/Positron/SetCutInRegion   BGO 1.0 mm
+
+/gate/physics/processList Enabled
+/gate/physics/processList Initialized
+/gate/physics/addProcess annihilation

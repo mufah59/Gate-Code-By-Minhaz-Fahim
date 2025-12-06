@@ -1,0 +1,64 @@
+##########################################################
+# Verbosity
+##########################################################
+/control/execute mac/verbose.mac
+
+##########################################################
+# Material Database
+##########################################################
+/gate/geometry/setMaterialDatabase data/GateMaterials.db
+
+##########################################################
+# Geometry
+##########################################################
+/control/execute mac/world.mac
+/control/execute mac/pet_head.mac
+/control/execute mac/pet_digitizer.mac
+/control/execute mac/phantom_necr_70cm.mac               #will be changed each time
+##########################################################
+# Physics
+##########################################################
+/control/execute mac/physics.mac
+
+##########################################################
+# Output
+##########################################################
+/control/execute mac/output.mac
+
+##########################################################
+# Initialisation
+##########################################################
+/gate/run/initialize
+
+##########################################################
+# Source
+##########################################################
+/control/execute mac/source_necr_70cm.mac                #will be changed each time
+
+##########################################################
+# Visualisation (commented out for production runs)
+##########################################################
+/control/execute mac/visu.mac
+
+# Random
+/gate/random/setEngineName MersenneTwister
+/gate/random/setEngineSeed auto
+
+# verbose
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+
+# Load configuration first
+/control/execute config.mac
+
+# Start acquisition
+/gate/application/setTimeStart 1 s
+/gate/application/setTimeSlice 1 s
+/gate/application/setTimeStop  2 s
+
+# Uncomment the line below to pause before starting (allows viewing geometry)
+# /gate/application/start
+
+/gate/application/startDAQ
+

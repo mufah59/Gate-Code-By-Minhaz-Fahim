@@ -1,0 +1,75 @@
+##########################################################
+# Visualization Version - Same as main.mac but slower
+# Paper 7 configuration with visualization enabled
+##########################################################
+
+##########################################################
+# Verbosity
+##########################################################
+/control/execute mac/verbose.mac
+
+##########################################################
+# Material Database
+##########################################################
+/gate/geometry/setMaterialDatabase data/GateMaterials.db
+
+##########################################################
+# Geometry
+##########################################################
+/control/execute mac/world.mac
+/control/execute mac/pet_head.mac
+/control/execute mac/pet_digitizer.mac
+/control/execute mac/cylindrical_phantom.mac
+
+##########################################################
+# Physics - Same as production
+##########################################################
+/control/execute mac/physics.mac
+
+##########################################################
+# Output
+##########################################################
+/control/execute mac/output.mac
+
+##########################################################
+# Visualisation - BEFORE initialization
+##########################################################
+/control/execute mac/visu.mac
+
+##########################################################
+# Initialisation
+##########################################################
+/gate/run/initialize
+
+##########################################################
+# Visualisation - AFTER initialization
+##########################################################
+/control/execute mac/visu_draw.mac
+
+##########################################################
+# Source - Use low activity visualization source
+##########################################################
+/control/execute mac/sources_visu.mac
+
+# Random
+/gate/random/setEngineName MersenneTwister
+/gate/random/setEngineSeed auto
+
+# verbose
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# Load configuration first
+/control/execute config.mac
+
+# Short acquisition for visualization (override config values)
+/gate/application/setTimeStart 0 s
+/gate/application/setTimeSlice 1.0 s
+/gate/application/setTimeStop  1.0 s
+
+# Start the simulation
+/gate/application/startDAQ
+
+# Refresh display after completion
+/vis/viewer/refresh

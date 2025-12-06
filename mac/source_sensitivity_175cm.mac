@@ -1,0 +1,22 @@
+##########################################################
+# 175cm Extended Line Source for Sensitivity Test
+# Paper 7: Section 2.2.1 - Sensitivity (Extended Phantom)
+# Activity: 3 MBq of F-18
+##########################################################
+
+/gate/source/addSource sensitivity_source_175cm
+/gate/source/sensitivity_source_175cm/setActivity 3 MBq
+/gate/source/sensitivity_source_175cm/gps/particle e+
+/gate/source/sensitivity_source_175cm/setForcedUnstableFlag true
+/gate/source/sensitivity_source_175cm/setForcedHalfLife 6586.2 s
+/gate/source/sensitivity_source_175cm/gps/energytype Fluor18
+
+# Source is confined to the inner volume of the line source phantom
+/gate/source/sensitivity_source_175cm/gps/type Volume
+/gate/source/sensitivity_source_175cm/gps/shape Cylinder
+/gate/source/sensitivity_source_175cm/gps/radius 0.1 cm
+/gate/source/sensitivity_source_175cm/gps/halfz 87.5 cm
+/gate/source/sensitivity_source_175cm/gps/angtype iso
+/gate/source/sensitivity_source_175cm/gps/centre 0. 0. 0. cm
+
+/gate/source/list

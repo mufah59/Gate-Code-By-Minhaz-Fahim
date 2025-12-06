@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Gate:*)",
+      "Bash(tee:*)",
+      "Bash(echo:*)",
+      "Bash(timeout 30 Gate:*)",
+      "WebFetch(domain:opengate.readthedocs.io)",
+      "Bash(git checkout:*)",
+      "Bash(rm:*)",
+      "Bash(nvidia-smi:*)",
+      "Bash(python3:*)",
+      "Bash(root -l -b -q:*)",
+      "Bash(root -l -b:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
