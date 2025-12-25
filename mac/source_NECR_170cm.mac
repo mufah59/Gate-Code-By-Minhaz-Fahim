@@ -1,28 +1,40 @@
 ##########################################################
-# 175cm Extended Scatter Phantom Line Source for Count Rate Test
-# Paper 7: Section 2.2.2 - Count Rate Performance
-# Activity: Variable (2-12 kBq/cc) - use config variable
-# Acquisition time: 1 second
-##########################################################
+# F-18 Source Definition for 175cm Phantom
+# Location: Inside line_source volume (hollow water tube)
+# Activity: 33,860 Bq (2 kBq/cc × 16.93 cm³)
+# Distribution: Uniform within active volume
+#########################################################
+/gate/source/addSource F18_175cm
+/gate/source/F18_175cm/setActivity 33860 becquerel
 
-/control/execute config.mac
+# Particle type: Positron (e+)
+/gate/source/F18_175cm/gps/particle e+
 
-# Line source positioned 4.5 mm off-center inside scatter phantom
-# Line source diameter: 6.4 mm (radius 0.32 cm)
-/gate/source/addSource scatter_source_175cm
-/gate/source/scatter_source_175cm/setActivity 2000 becquerel
-/gate/source/scatter_source_175cm/gps/particle e+
-/gate/source/scatter_source_175cm/setForcedUnstableFlag true
-/gate/source/scatter_source_175cm/setForcedHalfLife 6586.2 s
-/gate/source/scatter_source_175cm/gps/energytype Fluor18
-#Used 2Kbq/cc_there_would_be_more_like_2,4_6_8,10_12KBq/cc__as_per_Paper 7
+# F-18 decay properties
+/gate/source/F18_175cm/setForcedUnstableFlag true
+/gate/source/F18_175cm/setForcedHalfLife 6586.2 s
+/gate/source/F18_175cm/gps/energytype Fluor18
 
-# Source is a cylinder positioned 4.5mm off-center
-/gate/source/scatter_source_175cm/gps/type Volume
-/gate/source/scatter_source_175cm/gps/shape Cylinder
-/gate/source/scatter_source_175cm/gps/radius 0.32 cm
-/gate/source/scatter_source_175cm/gps/halfz 87.5 cm
-/gate/source/scatter_source_175cm/gps/angtype iso
-/gate/source/scatter_source_175cm/gps/centre 0.45 0. 0. cm
+/gate/source/F18_175cm/gps/type Volume
+/gate/source/F18_175cm/gps/shape Cylinder
 
+# Cylinder dimensions (match line_source geometry)
+# Note: GPS doesn't support Rmin, so we confine to volume
+/gate/source/F18_175cm/gps/radius 0.32 cm
+/gate/source/F18_175cm/gps/halfz 87.5 cm
+
+# Position: 4.5 mm off-center (matches line_source position)
+/gate/source/F18_175cm/gps/centre 0.45 0.0 0.0 cm
+
+# Isotropic angular distribution
+/gate/source/F18_175cm/gps/angtype iso
+
+
+# Ensures F-18 only spawns in active region (not polyethylene)
+/gate/source/F18_175cm/gps/confine line_source
+
+# List all sources
 /gate/source/list
+
+
+

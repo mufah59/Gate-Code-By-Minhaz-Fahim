@@ -1,19 +1,53 @@
 ##########################################################
-# 175cm Extended Scatter Phantom for Count Rate Test
-#Based on Paper 7 : Chapter : 2.2.2
-# Extended phantom for total-body validation
+# 175cm Extended Scatter Phantom for NECR Test
+# Paper 7: Section 2.2.2 - Count Rate Performance
+# NEMA NU-2 2018 Extended Configuration
 ##########################################################
+# SCATTER PHANTOM (Polyethylene Cylinder)
+# Material: Polyethylene (simulates tissue scattering)
+# Dimensions: 200 mm diameter × 1750 mm length
 
-# Define a cylindrical scatter phantom
-# 1750 mm length, 200 mm diameter
-/gate/world/daughters/name         phantom
-/gate/world/daughters/insert       cylinder
-/gate/phantom/geometry/setRmin     0.0 cm
-/gate/phantom/geometry/setRmax     10.0 cm
-/gate/phantom/geometry/setHeight   175.0 cm
-/gate/phantom/setMaterial          Water
-/gate/phantom/vis/setColor         blue
-/gate/phantom/vis/setVisible       1
 
-# Define the sensitive detector
-/gate/phantom/attachPhantomSD
+/gate/world/daughters/name phantom_175cm
+/gate/world/daughters/insert cylinder
+
+# Polyethylene scatter medium (density 0.96 g/cm³)
+/gate/phantom_175cm/setMaterial Polyethylene
+
+# Geometry: Solid cylinder
+# Outer radius: 10.0 cm (diameter 20.0 cm = 200 mm per NEMA)
+# Length: 175.0 cm (1750 mm extended phantom)
+/gate/phantom_175cm/geometry/setRmin 0.0 cm
+/gate/phantom_175cm/geometry/setRmax 10.0 cm
+/gate/phantom_175cm/geometry/setHeight 175.0 cm
+
+# Position: Centered in scanner FOV
+/gate/phantom_175cm/placement/setTranslation 0 0 0 cm
+
+# Visualization
+/gate/phantom_175cm/vis/setColor blue
+/gate/phantom_175cm/vis/setVisible 1
+
+/gate/phantom_175cm/daughters/name line_source
+/gate/phantom_175cm/daughters/insert cylinder
+
+# Material: Water (carrier for F-18 radioisotope)
+/gate/line_source/setMaterial Water
+
+# Geometry: Hollow tube (fillable volume)
+# Inner radius: 0.10 cm (2.0 mm inner diameter)
+# Outer radius: 0.32 cm (6.4 mm outer diameter)
+# Length: 175.0 cm (matches phantom length)
+/gate/line_source/geometry/setRmin 0.10 cm
+/gate/line_source/geometry/setRmax 0.32 cm
+/gate/line_source/geometry/setHeight 175.0 cm
+
+# Position: 4.5 mm off-center in X-direction
+# This creates asymmetric scatter distribution per NEMA
+/gate/line_source/placement/setTranslation 0.45 0 0 cm
+
+# Visualization
+/gate/line_source/vis/setColor red
+/gate/line_source/vis/setVisible 1
+
+

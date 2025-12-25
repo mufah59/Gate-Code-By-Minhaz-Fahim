@@ -1,22 +1,40 @@
 ##########################################################
-# 70cm Line Source for Sensitivity Test
-# Paper 7: Section 2.2.1 - Sensitivity
-# Activity: 3 MBq of F-18
+# 70cm Sensitivity Phantom with Aluminum Sleeves
+# Paper 7: Section 2.2.1 - For extrapolation to zero attenuation
+# This file adds 1 aluminum layer (2.5 mm thick)
+# Repeat with different layer counts: 0, 1, 2, 3, 4, 5
 ##########################################################
 
-/gate/source/addSource sensitivity_source_70cm
-/gate/source/sensitivity_source_70cm/setActivity 3 MBq
-/gate/source/sensitivity_source_70cm/gps/particle e+
-/gate/source/sensitivity_source_70cm/setForcedUnstableFlag true
-/gate/source/sensitivity_source_70cm/setForcedHalfLife 6586.2 s
-/gate/source/sensitivity_source_70cm/gps/energytype Fluor18
+# Include base phantom geometry
+/control/execute phantom_sensitivity_70cm.mac
 
-# Source is confined to the inner volume of the line source phantom
-/gate/source/sensitivity_source_70cm/gps/type Volume
-/gate/source/sensitivity_source_70cm/gps/shape Cylinder
-/gate/source/sensitivity_source_70cm/gps/radius 0.1 cm
-/gate/source/sensitivity_source_70cm/gps/halfz 35.0 cm
-/gate/source/sensitivity_source_70cm/gps/angtype iso
-/gate/source/sensitivity_source_70cm/gps/centre 0. 0. 0. cm
+# ============================================================
+# ALUMINUM SLEEVE (Attenuation Layer)
+# ============================================================
+# Per paper: "adding one layer of aluminum at each step"
+# Thickness: 2.5 mm per layer
+# For N layers: R_inner = 0.16 cm, R_outer = 0.16 + N×0.25 cm
+# ============================================================
 
-/gate/source/list
+/gate/world/daughters/name aluminum_layer_1
+/gate/world/daughters/insert cylinder
+
+# Material: Aluminum (attenuator)
+/gate/aluminum_layer_1/setMaterial Aluminium
+
+# Geometry: First layer (2.5 mm thick)
+# Inner radius: 0.16 cm (touches polyethylene tube)
+# Outer radius: 0.16 + 0.25 = 0.41 cm (2.5 mm thickness)
+/gate/aluminum_layer_1/geometry/setRmin 0.16 cm
+/gate/aluminum_layer_1/geometry/setRmax 0.41 cm
+/gate/aluminum_layer_1/geometry/setHeight 70.0 cm
+
+# Position: Concentric with phantom
+/gate/aluminum_layer_1/placement/setTranslation 0 0 0 cm
+
+# Visualization
+/gate/aluminum_layer_1/vis/setColor gray
+/gate/aluminum_layer_1/vis/setVisible 1
+
+
+
