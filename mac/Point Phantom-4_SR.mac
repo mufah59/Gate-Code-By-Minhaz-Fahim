@@ -1,0 +1,21 @@
+##########################################################
+# Spatial Resolution Phantom - Point 4
+# Position: r=1cm, z=24.25cm (1/8 AFOV)
+# Paper 7: Section 2.3.1
+##########################################################
+
+/gate/world/daughters/name point_source_4
+/gate/world/daughters/insert sphere
+
+# Material: Water (F-18 carrier)
+/gate/point_source_4/setMaterial Water
+
+# Geometry: 0.5 mm diameter sphere
+/gate/point_source_4/geometry/setRmax 0.025 cm
+
+# Position: 1 cm radial, 1/8 AFOV axial (194cm/8 = 24.25cm)
+/gate/point_source_4/placement/setTranslation 1.0 0.0 24.25 cm
+
+# Visualization
+/gate/point_source_4/vis/setColor yellow
+/gate/point_source_4/vis/setVisible 1

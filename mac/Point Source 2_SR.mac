@@ -1,0 +1,22 @@
+##########################################################
+# Point Source 2: Center FOV, r=10cm
+# Activity: 300 kBq
+##########################################################
+
+/gate/source/addSource F18_point_2
+/gate/source/F18_point_2/setActivity 300000 becquerel
+
+/gate/source/F18_point_2/gps/particle e+
+/gate/source/F18_point_2/setForcedUnstableFlag true
+/gate/source/F18_point_2/setForcedHalfLife 6586.2 s
+/gate/source/F18_point_2/gps/energytype Fluor18
+
+/gate/source/F18_point_2/gps/type Volume
+/gate/source/F18_point_2/gps/shape Sphere
+/gate/source/F18_point_2/gps/radius 0.025 cm
+/gate/source/F18_point_2/gps/centre 10.0 0.0 0.0 cm
+/gate/source/F18_point_2/gps/angtype iso
+
+/gate/source/F18_point_2/gps/confine point_source_2
+
+/gate/source/list

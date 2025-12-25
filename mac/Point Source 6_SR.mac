@@ -1,0 +1,22 @@
+##########################################################
+# Point Source 6: 1/8 AFOV (z=24.25cm), r=20cm
+# Activity: 300 kBq
+##########################################################
+
+/gate/source/addSource F18_point_6
+/gate/source/F18_point_6/setActivity 300000 becquerel
+
+/gate/source/F18_point_6/gps/particle e+
+/gate/source/F18_point_6/setForcedUnstableFlag true
+/gate/source/F18_point_6/setForcedHalfLife 6586.2 s
+/gate/source/F18_point_6/gps/energytype Fluor18
+
+/gate/source/F18_point_6/gps/type Volume
+/gate/source/F18_point_6/gps/shape Sphere
+/gate/source/F18_point_6/gps/radius 0.025 cm
+/gate/source/F18_point_6/gps/centre 20.0 0.0 24.25 cm
+/gate/source/F18_point_6/gps/angtype iso
+
+/gate/source/F18_point_6/gps/confine point_source_6
+
+/gate/source/list

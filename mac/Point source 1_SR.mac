@@ -1,0 +1,23 @@
+##########################################################
+# Point Source 1: Center FOV, r=1cm
+# Activity: 300 kBq
+##########################################################
+
+/gate/source/addSource F18_point_1
+/gate/source/F18_point_1/setActivity 300000 becquerel
+
+/gate/source/F18_point_1/gps/particle e+
+/gate/source/F18_point_1/setForcedUnstableFlag true
+/gate/source/F18_point_1/setForcedHalfLife 6586.2 s
+/gate/source/F18_point_1/gps/energytype Fluor18
+
+/gate/source/F18_point_1/gps/type Volume
+/gate/source/F18_point_1/gps/shape Sphere
+/gate/source/F18_point_1/gps/radius 0.025 cm
+/gate/source/F18_point_1/gps/centre 1.0 0.0 0.0 cm
+/gate/source/F18_point_1/gps/angtype iso
+
+# CRITICAL: Confine to water sphere
+/gate/source/F18_point_1/gps/confine point_source_1
+
+/gate/source/list

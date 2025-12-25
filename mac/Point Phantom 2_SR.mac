@@ -1,0 +1,21 @@
+##########################################################
+# Spatial Resolution Phantom - Point 2
+# Position: r=10cm, z=0cm (Center FOV)
+# Paper 7: Section 2.3.1
+##########################################################
+
+/gate/world/daughters/name point_source_2
+/gate/world/daughters/insert sphere
+
+# Material: Water (F-18 carrier)
+/gate/point_source_2/setMaterial Water
+
+# Geometry: 0.5 mm diameter sphere
+/gate/point_source_2/geometry/setRmax 0.025 cm
+
+# Position: 10 cm radial, center axial
+/gate/point_source_2/placement/setTranslation 10.0 0.0 0.0 cm
+
+# Visualization
+/gate/point_source_2/vis/setColor red
+/gate/point_source_2/vis/setVisible 1

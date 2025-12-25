@@ -1,0 +1,21 @@
+##########################################################
+# Spatial Resolution Phantom - Point 6
+# Position: r=20cm, z=24.25cm (1/8 AFOV)
+# Paper 7: Section 2.3.1
+##########################################################
+
+/gate/world/daughters/name point_source_6
+/gate/world/daughters/insert sphere
+
+# Material: Water (F-18 carrier)
+/gate/point_source_6/setMaterial Water
+
+# Geometry: 0.5 mm diameter sphere
+/gate/point_source_6/geometry/setRmax 0.025 cm
+
+# Position: 20 cm radial, 1/8 AFOV axial (194cm/8 = 24.25cm)
+/gate/point_source_6/placement/setTranslation 20.0 0.0 24.25 cm
+
+# Visualization
+/gate/point_source_6/vis/setColor yellow
+/gate/point_source_6/vis/setVisible 1

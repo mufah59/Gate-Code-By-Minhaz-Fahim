@@ -1,0 +1,102 @@
+#=====================================================
+#  Biograph Vision Quadra Geometry (pet_head.mac)
+#  Based on Table 1 Specifications Provided
+#=====================================================
+
+#	CYLINDRICAL PET SYSTEM ENVELOPE
+/gate/world/daughters/name cylindricalPET
+/gate/world/daughters/insert cylinder
+/gate/cylindricalPET/placement/setTranslation 0.0 0.0 0.0 cm
+/gate/cylindricalPET/geometry/setRmax 41.0 cm  # Half of PET transaxial FOV (78cm/2) + margin
+/gate/cylindricalPET/geometry/setRmin 0 cm
+/gate/cylindricalPET/geometry/setHeight 106 cm # PET Axial FOV from specifications
+/gate/cylindricalPET/setMaterial Air
+/gate/cylindricalPET/vis/forceWireframe
+/gate/cylindricalPET/vis/setColor white
+
+#	DETECTOR HEAD (rsector) - One detector block assembly
+/gate/cylindricalPET/daughters/name head
+/gate/cylindricalPET/daughters/insert box
+/gate/head/placement/setTranslation 0.0 0.0 0.0 cm  # Will be positioned by ring repeater
+/gate/head/geometry/setXLength 30.0 cm
+/gate/head/geometry/setYLength 12.0 cm
+/gate/head/geometry/setZLength 3.3125 cm  # 106cm/32 rings = 3.3125 cm per ring axial height
+/gate/head/setMaterial Air
+/gate/head/vis/setVisible 0
+
+#	MODULE (Detector Block)
+/gate/head/daughters/name module
+/gate/head/daughters/insert box
+/gate/module/placement/setTranslation 0.0 0.0 0.0 cm
+# Dimensions based on: 2 mini-blocks axially × 4 mini-blocks transaxially
+/gate/module/geometry/setXLength 6.4 cm    # 4 mini-blocks × 16mm SiPM array width
+/gate/module/geometry/setYLength 3.2 cm    # 2 mini-blocks × 16mm SiPM array height
+/gate/module/geometry/setZLength 20.0 mm   # Crystal depth
+/gate/module/setMaterial Air
+/gate/module/vis/setVisible 0
+
+#	MINI-BLOCK (5×5 crystal array on one SiPM)
+/gate/module/daughters/name block
+/gate/module/daughters/insert box
+/gate/block/placement/setTranslation 0.0 0.0 0.0 cm
+/gate/block/geometry/setXLength 16.0 mm  # SiPM array size from specifications
+/gate/block/geometry/setYLength 16.0 mm  # SiPM array size from specifications
+/gate/block/geometry/setZLength 20.0 mm  # Crystal depth
+/gate/block/setMaterial Air
+/gate/block/vis/setVisible 0
+
+#	CRYSTAL (Single crystal pixel)
+/gate/block/daughters/name crystal
+/gate/block/daughters/insert box
+/gate/crystal/placement/setTranslation 0.0 0.0 0.0 cm
+/gate/crystal/geometry/setXLength 3.2 mm  # Crystal size from specifications
+/gate/crystal/geometry/setYLength 3.2 mm  # Crystal size from specifications
+/gate/crystal/geometry/setZLength 20.0 mm # Crystal size from specifications
+# Material will be set for each simulation variant (LSO, LYSO, BGO)
+/gate/crystal/setMaterial LSO  # Default
+/gate/crystal/vis/setColor green
+/gate/crystal/vis/setVisible 1
+
+#	REPEAT CRYSTAL within a mini-block (5×5 array)
+/gate/crystal/repeaters/insert cubicArray
+/gate/crystal/cubicArray/setRepeatNumberX 5
+/gate/crystal/cubicArray/setRepeatNumberY 5
+/gate/crystal/cubicArray/setRepeatNumberZ 1
+# Calculate pitch: 16mm SiPM / 5 crystals = 3.2mm pitch (crystals are contiguous)
+/gate/crystal/cubicArray/setRepeatVector 3.2 3.2 0.0 mm
+
+#	REPEAT MINI-BLOCK within a module (2×4 array)
+/gate/block/repeaters/insert cubicArray
+/gate/block/cubicArray/setRepeatNumberX 4  # Transaxial mini-blocks
+/gate/block/cubicArray/setRepeatNumberY 2  # Axial mini-blocks
+/gate/block/cubicArray/setRepeatNumberZ 1
+# Mini-blocks are contiguous (16mm each)
+/gate/block/cubicArray/setRepeatVector 16.0 16.0 0.0 mm
+
+#	REPEAT HEAD to form full detector ring (38 blocks)
+/gate/head/repeaters/insert ring
+/gate/head/ring/setRepeatNumber 38  # Detector blocks per ring from specifications
+# Radius: Detector ring diameter is 82cm, so radius is 41cm
+# Position blocks at inner radius of cylindricalPET
+/gate/head/ring/setRadius 39.0 cm  # Slightly inside 41cm to account for block depth
+
+#	REPEAT HEAD in axial direction to form 32 rings
+/gate/head/repeaters/insert linear
+/gate/head/linear/setRepeatNumber 32  # Detector rings from specifications
+# Axial spacing: 106cm total FOV / 32 rings = 3.3125cm
+/gate/head/linear/setRepeatVector 0.0 0.0 3.3125 cm
+
+#	ATTACH SYSTEM HIERARCHY
+/gate/systems/cylindricalPET/rsector/attach head
+/gate/systems/cylindricalPET/module/attach module
+/gate/systems/cylindricalPET/submodule/attach block
+/gate/systems/cylindricalPET/crystal/attach crystal
+
+#	ATTACH CRYSTAL SENSITIVE DETECTOR
+/gate/crystal/attachCrystalSD
+
+#	OPTIONAL: Enable geometry overlap check (useful for debugging)
+# /gate/geometry/enableAutoOverlapCheck 1
+
+#	DESCRIBE SYSTEM HIERARCHY (for verification)
+/gate/systems/cylindricalPET/describe
